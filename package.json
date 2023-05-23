@@ -1,5 +1,5 @@
 {
-  "name": "vue-vite-typescript-tailwindcss",
+  "name": "vue-books-app",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite --host --port 7316",

@@ -5,6 +5,7 @@ import RadioSvg from "../../svgs/radio-svg.vue";
 import RadioSelectedSvg from "../../svgs/radio-selected-svg.vue";
 import BookComponent from "../../components/Book.vue";
 import BookService, { Book } from "../../services/book.service";
+import IsBusy from "../../components/IsBusy.vue";
 
 const books = ref<Book[]>([]);
 const isBusy = ref(false);
@@ -83,9 +84,7 @@ async function deleteAllBooks() {
         </form>
       </div>
     </header>
-    <div v-if="isBusy" class="flex justify-center my-32">
-      <LoadingSvg width="50" height="50" class="text-indigo-800"></LoadingSvg>
-    </div>
+    <IsBusy v-if="isBusy" />
     <template v-else-if="books.length">
       <section class="books">
         <template v-for="book of books" :key="book.id">
@@ -107,11 +106,12 @@ async function deleteAllBooks() {
               <h5>{{ book.title }}</h5>
             </div>
             <div class="px-3">
-              <button
+              <router-link
+                :to="{ name: 'books.edit', params: { id: book.id } }"
                 class="text-xs font-medium bg-white rounded px-1 py-0.5 text-indigo-900"
               >
                 Edit
-              </button>
+              </router-link>
             </div>
           </div>
         </template>
@@ -128,7 +128,7 @@ async function deleteAllBooks() {
         <img src="/static/media/no-book.png" width="220" />
       </div>
       <div class="text-center">
-        <button class="action-btn">Add Book</button>
+        <router-link :to="{ name: 'books.add' }" class="action-btn">Add Book</router-link>
       </div>
     </section>
   </div>

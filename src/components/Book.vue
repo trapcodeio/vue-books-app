@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Book } from "../types";
-
+import BookService, { Book } from "../services/book.service";
 defineProps<{ book: Book }>();
 </script>
 <template>
-  <section class="bg-indigo-950 p-7 text-white">
+  <section v-if="book" class="bg-indigo-950 p-7 text-white">
     <div class="flex space-x-5">
       <div class="cover flex-initial">
         <img src="/static/media/no-cover-img.png" class="w-[130px] h-[130px]" />
@@ -14,7 +13,9 @@ defineProps<{ book: Book }>();
         <div class="about-book">
           <p><span>Title:</span> {{ book.title }}</p>
           <p><span>Description:</span> {{ book.description }}</p>
-          <p><span>Availability:</span> {{ book.availabe ? "Lent" : "No" }}</p>
+          <p>
+            <span>Availability:</span> {{ BookService.isAvailable(book) ? "Lent" : "No" }}
+          </p>
         </div>
       </div>
     </div>

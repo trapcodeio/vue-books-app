@@ -8,11 +8,22 @@ const links = [
 <template>
   <header class="navbar-dark">
     <div class="container flex justify-between">
-      <img src="/static/media/logo.png" class="logo">
+      <router-link :to="{ name: 'books' }">
+        <img src="/static/media/logo.png" class="logo" />
+      </router-link>
       <ul class="flex space-x-3">
         <template v-for="link of links">
           <li>
-            <router-link class="text-gray-500 hover:text-white text-sm" :to="link.route">{{ link.name }}</router-link>
+            <router-link
+              class="hover:text-white text-sm"
+              :class="{
+                'text-white': $route.name === link.route.name,
+                'text-gray-500': $route.name !== link.route.name
+              }"
+              :to="link.route"
+              >{{ link.name }}
+            </router-link>
+            s
           </li>
         </template>
       </ul>

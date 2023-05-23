@@ -4,12 +4,15 @@ export interface Book {
   id: string;
   title: string;
   description: string;
-  available: boolean;
+  // the api for some reason returns this as available
+  availabe?: boolean;
+  // we want to use available instead
+  available?: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
-export type BookForm = Pick<Book, "title" | "description">;
+export type BookForm = Pick<Book, "title" | "description" | "available">;
 
 class BookService {
   static getAll() {
@@ -24,7 +27,7 @@ class BookService {
     return $axios.post<Book>("/books", data);
   }
 
-  static update(data: Book, id: any) {
+  static update(id: string, data: BookForm) {
     return $axios.put<any>(`/books/${id}`, data);
   }
 
@@ -38,6 +41,27 @@ class BookService {
 
   static findByTitle(title: string) {
     return $axios.get<Book[]>(`/books?title=${title}`);
+  }
+
+  static validate(data: BookForm) {
+    const errors: string[] = [];
+    if (!data.title) {
+      errors.push("Title is required.");
+    }
+    if (!data.description) {
+      errors.push("Description is required.");
+    }
+    return errors;
+  }
+
+  /**
+   * Since the api misspells available as availabe we need to use this function
+   * To check if a book is available
+   * Incase the api is fixed it won't break our code
+   * @param book
+   */
+  static isAvailable(book: Book) {
+    return book.available === true || book.availabe === true;
   }
 }
 

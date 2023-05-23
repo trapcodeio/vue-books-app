@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import BookService, { BookForm } from "../../services/book.service";
-import { useNotification } from "../../notification";
 import { useRouter } from "vue-router";
+import { useNotification } from "../../notification";
+
+import BookService, { BookForm } from "../../services/book.service";
 
 const $router = useRouter();
 const notification = useNotification();
@@ -13,23 +14,9 @@ const form = reactive<BookForm>({
 });
 const formErrors = ref<string[]>([]);
 
-// validate form
-function validateForm() {
-  // clear previous errors
-  formErrors.value = [];
-
-  if (!form.title) {
-    formErrors.value.push("Title is required");
-  }
-
-  if (!form.description) {
-    formErrors.value.push("Description is required");
-  }
-}
-
 // add book
 async function addBook() {
-  validateForm();
+  formErrors.value = BookService.validate(form);
   if (formErrors.value.length) return;
 
   try {

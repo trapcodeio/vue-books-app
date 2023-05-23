@@ -21,9 +21,6 @@ body {
     @apply border-fuchsia-500 border-opacity-20;
 }
 
-input[type="text"] {
-    @apply outline-indigo-400;
-}
 
 .action-btn {
     @apply bg-indigo-900 hover:bg-indigo-800;
@@ -36,5 +33,34 @@ input[type="text"] {
 }
 
 .action-btn-invert.red-on-hover {
-   @apply hover:border-red-700 hover:bg-red-700 hover:text-white
+    @apply hover:border-red-700 hover:bg-red-700 hover:text-white;
+}
+
+input[type="text"], textarea {
+    @apply outline-indigo-400;
+}
+
+.form {
+    @apply flex flex-col space-y-3;
+}
+
+.form label {
+    @apply text-sm text-gray-600 font-semibold;
+}
+
+.form input[type="text"], .form textarea {
+    @apply w-full border border-gray-300 rounded px-3 py-2 text-sm text-gray-600;
+}
+
+
+.notification {
+    @apply flex justify-between space-x-3 items-center rounded-sm text-sm mb-3 px-2 py-2
+}
+
+.notification.success {
+    @apply bg-green-700 text-white;
+}
+
+.notification.error {
+    @apply bg-red-700 text-white;
 }

@@ -1,32 +1,17 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { $axios } from "../../axios";
 import LoadingSvg from "../../svgs/loading-svg.vue";
 import RadioSvg from "../../svgs/radio-svg.vue";
 import RadioSelectedSvg from "../../svgs/radio-selected-svg.vue";
-import type { Book } from "../../types";
 import BookComponent from "../../components/Book.vue";
+import BookService, { Book } from "../../services/book.service";
 
 const books = ref<Book[]>([]);
-const isFetchingBooks = ref(false);
+const isBusy = ref(false);
 const selectedBook = ref<Book | null>(null);
 
 // Fetch books on component mount
 onMounted(fetchBooks);
-
-// Fetch books from API
-async function fetchBooks() {
-  isFetchingBooks.value = true;
-
-  try {
-    const { data } = await $axios.get<Book[]>("books");
-    books.value = data;
-    selectedBook.value = data[0];
-  } catch (e) {
-  } finally {
-    isFetchingBooks.value = false;
-  }
-}
 
 // Check if a book is currently selected
 function isActive(book: Book) {
@@ -40,6 +25,35 @@ function selectBook(book: Book) {
     selectedBook.value = null;
   } else {
     selectedBook.value = book;
+  }
+}
+
+// Fetch books from API
+async function fetchBooks() {
+  isBusy.value = true;
+
+  try {
+    const { data } = await BookService.getAll();
+    books.value = data;
+  } catch (e) {
+  } finally {
+    isBusy.value = false;
+  }
+}
+
+// delete all books
+async function deleteAllBooks() {
+  const shouldDelete = confirm("Are you sure you want to delete all books?");
+  if (!shouldDelete) return;
+
+  isBusy.value = true;
+
+  try {
+    await BookService.deleteAll();
+    books.value = [];
+  } catch (e) {
+  } finally {
+    isBusy.value = false;
   }
 }
 </script>
@@ -69,7 +83,7 @@ function selectBook(book: Book) {
         </form>
       </div>
     </header>
-    <div v-if="isFetchingBooks" class="flex justify-center my-32">
+    <div v-if="isBusy" class="flex justify-center my-32">
       <LoadingSvg width="50" height="50" class="text-indigo-800"></LoadingSvg>
     </div>
     <template v-else-if="books.length">
@@ -103,8 +117,10 @@ function selectBook(book: Book) {
         </template>
       </section>
       <div class="flex justify-center space-x-3 mt-12">
-        <button class="action-btn">Add Book</button>
-        <button class="action-btn-invert red-on-hover">Remove All Books</button>
+        <router-link :to="{ name: 'books.add' }" class="action-btn">Add Book</router-link>
+        <button @click.prevent="deleteAllBooks" class="action-btn-invert red-on-hover">
+          Remove All Books
+        </button>
       </div>
     </template>
     <section v-else>

@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    @apply bg-fuchsia-50;
+}
+
+.logo {
+    max-height: 25px;
+}
+
+.navbar-dark {
+    @apply p-4 m-0;
+    background: linear-gradient(107.84deg, #362171 12.94%, #0C072D 39.98%, #0A1551 67.02%, #260635 99.55%);
+}
+
+.box {
+    @apply bg-white shadow-lg border;
+    @apply border-fuchsia-500 border-opacity-20;
+}
+
+input[type="text"] {
+    @apply outline-indigo-400;
+}
+
+.action-btn {
+    @apply bg-indigo-900 hover:bg-indigo-800;
+    @apply text-white text-sm px-5 py-2.5 rounded;
+}
+
+.action-btn-invert {
+    @apply bg-white border border-indigo-900;
+    @apply text-indigo-900 text-sm px-5 py-2.5 rounded;
+}
+
+.action-btn-invert.red-on-hover {
+   @apply hover:border-red-700 hover:bg-red-700 hover:text-white
+}

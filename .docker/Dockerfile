@@ -24,7 +24,7 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
 
 # prod (and build) stages
 FROM dev AS build

@@ -23,7 +23,6 @@ const links = [
               :to="link.route"
               >{{ link.name }}
             </router-link>
-            s
           </li>
         </template>
       </ul>

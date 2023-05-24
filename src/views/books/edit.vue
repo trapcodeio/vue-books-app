@@ -13,7 +13,8 @@ const isBusy = ref(false);
 
 const form = reactive<BookForm>({
   title: "",
-  description: ""
+  description: "",
+  available: true
 });
 
 const formErrors = ref<string[]>([]);
@@ -32,6 +33,7 @@ async function fetchBook() {
     // populate form
     form.title = data.title;
     form.description = data.description;
+    form.available = BookService.isAvailable(data);
   } catch (e) {
     console.error(e);
     notification.notify(`Failed to fetch book ${bookId.value}`, "error");
@@ -66,24 +68,6 @@ async function deleteBook() {
   } catch (e) {
     console.error(e);
     notification.notify(`Failed to delete book ${book.value?.title}`, "error");
-  }
-}
-
-// return book
-async function returnBook() {
-  if (!confirm(`Are you sure you want to return ${book.value?.title}`)) return;
-
-  try {
-    await BookService.update(bookId.value, {
-      ...form,
-      available: true
-    });
-
-    notification.notify(`Book: ${book.value?.title} returned successfully`);
-    await $router.push({ name: "books" });
-  } catch (e) {
-    console.error(e);
-    notification.notify(`Failed to return book ${book.value?.title}`, "error");
   }
 }
 </script>
@@ -124,9 +108,9 @@ async function returnBook() {
             ></textarea>
           </div>
 
-          <div>
-            <b class="mr-1 text-gray-600">Availability:</b>
-            <span>{{ BookService.isAvailable(book) ? "Lent" : "No" }}</span>
+          <div class="flex item-center space-x-1">
+            <label>Available:</label>
+            <input type="checkbox" class="accent-indigo-600" v-model="form.available" />
           </div>
 
           <div class="flex justify-center mt-5 space-x-3">
@@ -138,13 +122,7 @@ async function returnBook() {
               type="submit"
               class="action-btn-invert red-on-hover"
             >
-              Delete</button
-            ><button
-              @click.prevent="returnBook"
-              type="submit"
-              class="action-btn-invert blue-on-hover"
-            >
-              Return in Library
+              Delete
             </button>
           </div>
         </form>

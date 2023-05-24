@@ -14,7 +14,8 @@ defineProps<{ book: Book }>();
           <p><span>Title:</span> {{ book.title }}</p>
           <p><span>Description:</span> {{ book.description }}</p>
           <p>
-            <span>Availability:</span> {{ BookService.isAvailable(book) ? "Lent" : "No" }}
+            <span>Availability:</span>
+            {{ BookService.isAvailable(book) ? "Available" : "Lent" }}
           </p>
         </div>
       </div>

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import RadioSvg from "../../svgs/radio-svg.vue";
 import RadioSelectedSvg from "../../svgs/radio-selected-svg.vue";
 import BookComponent from "../../components/Book.vue";
 import BookService, { Book } from "../../services/book.service";
-import IsBusy from "../../components/IsBusy.vue";
 import { useNotification } from "../../notification";
 
 const notification = useNotification();
@@ -99,7 +98,7 @@ function stopSearching() {
         </form>
       </div>
     </header>
-    <IsBusy v-if="isBusy" class="my-32" />
+    <IsBusy v-if="isBusy" class="my-32" message="Fetching Books" />
     <template v-else-if="books.length">
       <div class="text-right text-xs my-1" v-if="isSearchResult">
         <button @click.prevent="stopSearching" class="text-red-800">

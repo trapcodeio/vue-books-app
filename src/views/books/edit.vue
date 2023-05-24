@@ -3,7 +3,6 @@ import { computed, onMounted, reactive, ref } from "vue";
 import BookService, { Book, BookForm } from "../../services/book.service";
 import { useNotification } from "../../notification";
 import { useRouter } from "vue-router";
-import IsBusy from "../../components/IsBusy.vue";
 
 const $router = useRouter();
 const notification = useNotification();
@@ -79,7 +78,7 @@ async function deleteBook() {
 <template>
   <div class="flex">
     <div class="box max-w-lg mx-auto w-full p-5">
-      <IsBusy v-if="isBusy" class="my-32" />
+      <IsBusy v-if="isBusy" class="my-32" message="Updating Book" />
       <template v-else-if="book">
         <h2 class="text-lg text-primary-800">
           <span class="text-gray-500 mr-2">Edit Book:</span>

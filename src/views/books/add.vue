@@ -2,9 +2,7 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useNotification } from "../../notification";
-
 import BookService, { BookForm } from "../../services/book.service";
-import IsBusy from "../../components/IsBusy.vue";
 
 const $router = useRouter();
 const notification = useNotification();
@@ -68,7 +66,7 @@ async function addBook() {
         </div>
 
         <div class="text-center mt-5">
-          <IsBusy class="my-3" v-if="isBusy"></IsBusy>
+          <IsBusy class="my-3" v-if="isBusy" message="Adding Book"></IsBusy>
           <button v-else type="submit" class="action-btn">Add Book</button>
         </div>
       </form>

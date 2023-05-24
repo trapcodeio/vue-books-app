@@ -13,7 +13,8 @@ body {
 
 .navbar-dark {
     @apply p-4 m-0;
-    background: linear-gradient(107.84deg, #362171 12.94%, #0C072D 39.98%, #0A1551 67.02%, #260635 99.55%);
+    @apply bg-primary-900;
+    /*background: linear-gradient(107.84deg, #362171 12.94%, #0C072D 39.98%, #0A1551 67.02%, #260635 99.55%);*/
 }
 
 .box {
@@ -23,13 +24,13 @@ body {
 
 
 .action-btn {
-    @apply bg-indigo-900 hover:bg-indigo-800;
+    @apply bg-primary-900 hover:bg-primary-800;
     @apply text-white text-sm px-5 py-2 rounded;
 }
 
 .action-btn-invert {
-    @apply bg-white border border-indigo-900;
-    @apply text-indigo-900 text-sm px-5 py-2 rounded;
+    @apply bg-white border border-primary-900;
+    @apply text-primary-900 text-sm px-5 py-2 rounded;
 }
 
 .action-btn-invert.red-on-hover {
@@ -41,7 +42,7 @@ body {
 }
 
 input[type="text"], textarea {
-    @apply outline-indigo-400;
+    @apply outline-primary-400;
 }
 
 .form {

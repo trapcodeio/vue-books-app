@@ -77,7 +77,7 @@ async function deleteBook() {
     <div class="box max-w-lg mx-auto w-full p-5">
       <IsBusy v-if="isBusy" />
       <template v-else-if="book">
-        <h2 class="text-lg text-indigo-800">
+        <h2 class="text-lg text-primary-800">
           <span class="text-gray-500 mr-2">Edit Book:</span>
           <b>{{ book.title }}</b>
         </h2>
@@ -110,7 +110,7 @@ async function deleteBook() {
 
           <div class="flex item-center space-x-1">
             <label>Available:</label>
-            <input type="checkbox" class="accent-indigo-600" v-model="form.available" />
+            <input type="checkbox" class="accent-primary-600" v-model="form.available" />
           </div>
 
           <div class="flex justify-center mt-5 space-x-3">

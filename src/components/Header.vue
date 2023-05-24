@@ -18,7 +18,7 @@ const links = [
               class="hover:text-white text-sm"
               :class="{
                 'text-white': $route.name === link.route.name,
-                'text-gray-500': $route.name !== link.route.name
+                'text-gray-400': $route.name !== link.route.name
               }"
               :to="link.route"
               >{{ link.name }}

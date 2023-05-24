@@ -13,7 +13,9 @@ module.exports = {
       }
     },
     extend: {
-      colors: {}
+      colors: {
+        primary: colors.green
+      }
     }
   },
   variants: {

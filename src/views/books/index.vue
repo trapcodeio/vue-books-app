@@ -98,17 +98,17 @@ async function deleteAllBooks() {
                 v-if="isActive(book)"
                 width="20"
                 height="24"
-                class="text-indigo-800"
+                class="text-primary-800"
                 :class="{ 'text-white': isActive(book) }"
               />
-              <RadioSvg v-else width="20" height="24" class="text-indigo-800" />
+              <RadioSvg v-else width="20" height="24" class="text-primary-800" />
 
               <h5>{{ book.title }}</h5>
             </div>
             <div class="px-3">
               <router-link
                 :to="{ name: 'books.edit', params: { id: book.id } }"
-                class="text-xs font-medium bg-white rounded px-1 py-0.5 text-indigo-900"
+                class="text-xs font-medium bg-white rounded px-1 py-0.5 text-primary-900"
               >
                 Edit
               </router-link>
@@ -149,7 +149,7 @@ async function deleteAllBooks() {
 }
 
 .book.active {
-  @apply bg-indigo-900 text-white;
+  @apply bg-primary-900 text-white;
 }
 
 .book:first-child {

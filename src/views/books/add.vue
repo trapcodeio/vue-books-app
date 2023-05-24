@@ -33,7 +33,7 @@ async function addBook() {
 <template>
   <div class="flex">
     <div class="box max-w-lg mx-auto w-full p-5">
-      <h2 class="text-lg font-bold text-indigo-900">Add Book</h2>
+      <h2 class="text-lg font-bold text-primary-900">Add Book</h2>
 
       <div class="mt-5 text-red-600 text-sm" v-if="formErrors.length">
         <ul>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import LoadingSvg from "../svgs/loading-svg.vue";
 </script>
 <template>

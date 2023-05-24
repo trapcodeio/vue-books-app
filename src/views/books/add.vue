@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { useNotification } from "../../notification";
 
 import BookService, { BookForm } from "../../services/book.service";
+import IsBusy from "../../components/IsBusy.vue";
 
 const $router = useRouter();
 const notification = useNotification();
@@ -13,11 +14,14 @@ const form = reactive<BookForm>({
   description: ""
 });
 const formErrors = ref<string[]>([]);
+const isBusy = ref(false);
 
 // add book
 async function addBook() {
   formErrors.value = BookService.validate(form);
   if (formErrors.value.length) return;
+
+  isBusy.value = true;
 
   try {
     await BookService.create(form);
@@ -26,6 +30,8 @@ async function addBook() {
   } catch (e) {
     console.error(e);
     notification.notify(`Failed to add book ${form.title}`, "error");
+  } finally {
+    isBusy.value = false;
   }
 }
 </script>
@@ -62,9 +68,8 @@ async function addBook() {
         </div>
 
         <div class="text-center mt-5">
-          <button @click.prevent="addBook" type="submit" class="action-btn">
-            Add Book
-          </button>
+          <IsBusy class="my-3" v-if="isBusy"></IsBusy>
+          <button v-else type="submit" class="action-btn">Add Book</button>
         </div>
       </form>
     </div>

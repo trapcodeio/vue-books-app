@@ -47,6 +47,8 @@ async function updateBook() {
   formErrors.value = BookService.validate(form);
   if (formErrors.value.length) return;
 
+  isBusy.value = true;
+
   try {
     await BookService.update(bookId.value, form);
     notification.notify(`Book: ${form.title} added successfully`);
@@ -54,6 +56,8 @@ async function updateBook() {
   } catch (e) {
     console.error(e);
     notification.notify(`Failed to add book ${form.title}`, "error");
+  } finally {
+    isBusy.value = false;
   }
 }
 
@@ -75,7 +79,7 @@ async function deleteBook() {
 <template>
   <div class="flex">
     <div class="box max-w-lg mx-auto w-full p-5">
-      <IsBusy v-if="isBusy" />
+      <IsBusy v-if="isBusy" class="my-32" />
       <template v-else-if="book">
         <h2 class="text-lg text-primary-800">
           <span class="text-gray-500 mr-2">Edit Book:</span>
@@ -114,12 +118,10 @@ async function deleteBook() {
           </div>
 
           <div class="flex justify-center mt-5 space-x-3">
-            <button @click.prevent="updateBook" type="submit" class="action-btn">
-              Update
-            </button>
+            <button type="submit" class="action-btn">Update</button>
             <button
+              type="button"
               @click.prevent="deleteBook"
-              type="submit"
               class="action-btn-invert red-on-hover"
             >
               Delete

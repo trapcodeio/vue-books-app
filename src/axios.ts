@@ -10,4 +10,4 @@ export const $axios = axios.create({
   baseURL: serverUrl
 });
 
-console.log(serverUrl);
+if (import.meta.env.DEV) console.log(`API_URL:`, serverUrl);

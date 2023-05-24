@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import LoadingSvg from "../../svgs/loading-svg.vue";
+import { computed, onMounted, ref } from "vue";
 import RadioSvg from "../../svgs/radio-svg.vue";
 import RadioSelectedSvg from "../../svgs/radio-selected-svg.vue";
 import BookComponent from "../../components/Book.vue";
 import BookService, { Book } from "../../services/book.service";
 import IsBusy from "../../components/IsBusy.vue";
+import { useNotification } from "../../notification";
 
+const notification = useNotification();
 const books = ref<Book[]>([]);
+const search = ref("");
+const isSearchResult = ref(false);
 const isBusy = ref(false);
 const selectedBook = ref<Book | null>(null);
 
@@ -36,6 +39,7 @@ async function fetchBooks() {
   try {
     const { data } = await BookService.getAll();
     books.value = data;
+    isSearchResult.value = false;
   } catch (e) {
   } finally {
     isBusy.value = false;
@@ -57,6 +61,31 @@ async function deleteAllBooks() {
     isBusy.value = false;
   }
 }
+
+// search
+async function searchBooks() {
+  if (!search.value) return stopSearching();
+
+  isBusy.value = true;
+  selectedBook.value = null;
+
+  try {
+    const { data } = await BookService.findByTitle(search.value);
+    books.value = data;
+    isSearchResult.value = true;
+  } catch (e) {
+    console.log(e);
+    notification.notify(`Failed to search books`, "error");
+  } finally {
+    isBusy.value = false;
+  }
+}
+
+// stop searching
+function stopSearching() {
+  search.value = "";
+  if (isSearchResult.value) fetchBooks();
+}
 </script>
 <template>
   <BookComponent v-if="selectedBook" :book="selectedBook" />
@@ -64,28 +93,19 @@ async function deleteAllBooks() {
     <header class="grid grid-cols-2">
       <h2 class="text-2xl text-gray-800">Book List</h2>
       <div>
-        <form class="flex">
-          <input
-            type="text"
-            placeholder="Search by title"
-            class="search-input rounded-l rounded-r-none w-full"
-          />
-          <button
-            type="submit"
-            class="
-              search-input
-              rounded-r
-              text-gray-400
-              hover:bg-gray-600 hover:text-white
-            "
-          >
-            Search
-          </button>
+        <form class="search-form" @submit.prevent="searchBooks">
+          <input type="text" v-model="search" placeholder="Search by title" />
+          <button type="submit">Search</button>
         </form>
       </div>
     </header>
-    <IsBusy v-if="isBusy" />
+    <IsBusy v-if="isBusy" class="my-32" />
     <template v-else-if="books.length">
+      <div class="text-right text-xs my-1" v-if="isSearchResult">
+        <button @click.prevent="stopSearching" class="text-red-800">
+          Stop searching
+        </button>
+      </div>
       <section class="books">
         <template v-for="book of books" :key="book.id">
           <div
@@ -135,8 +155,21 @@ async function deleteAllBooks() {
 </template>
 
 <style scoped>
-.search-input {
+.search-form {
+  @apply flex;
+}
+
+.search-form input,
+.search-form button {
   @apply border border-gray-300 text-sm px-3 py-2;
+}
+
+.search-form input {
+  @apply rounded-l rounded-r-none w-full;
+}
+
+.search-form button {
+  @apply rounded-r text-gray-400 hover:bg-gray-600 hover:text-white;
 }
 
 .books {

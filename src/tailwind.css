@@ -7,15 +7,6 @@ body {
     @apply bg-fuchsia-50;
 }
 
-.logo {
-    max-height: 25px;
-}
-
-.navbar-dark {
-    @apply p-4 m-0;
-    @apply bg-primary-900;
-    /*background: linear-gradient(107.84deg, #362171 12.94%, #0C072D 39.98%, #0A1551 67.02%, #260635 99.55%);*/
-}
 
 .box {
     @apply bg-white shadow-lg border;
@@ -42,7 +33,7 @@ body {
 }
 
 input[type="text"], textarea {
-    @apply outline-primary-400;
+    @apply outline-primary-500;
 }
 
 .form {

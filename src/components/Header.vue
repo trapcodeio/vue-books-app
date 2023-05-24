@@ -29,3 +29,14 @@ const links = [
     </div>
   </header>
 </template>
+
+<style scoped>
+.logo {
+  max-height: 25px;
+}
+
+.navbar-dark {
+  @apply p-4 m-0;
+  @apply bg-primary-900;
+}
+</style>

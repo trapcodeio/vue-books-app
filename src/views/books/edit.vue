@@ -50,11 +50,11 @@ async function updateBook() {
 
   try {
     await BookService.update(bookId.value, form);
-    notification.notify(`Book: ${form.title} added successfully`);
+    notification.notify(`Book: ${form.title} updated successfully`);
     await $router.push({ name: "books" });
   } catch (e) {
     console.error(e);
-    notification.notify(`Failed to add book ${form.title}`, "error");
+    notification.notify(`Failed to update book ${form.title}`, "error");
   } finally {
     isBusy.value = false;
   }

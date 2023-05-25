@@ -9,7 +9,8 @@ const notification = useNotification();
 
 const form = reactive<BookForm>({
   title: "",
-  description: ""
+  description: "",
+  available: true
 });
 const formErrors = ref<string[]>([]);
 const isBusy = ref(false);
@@ -63,6 +64,11 @@ async function addBook() {
             v-model="form.description"
             :placeholder="form.title ? `About: ${form.title}` : 'About your book...'"
           ></textarea>
+        </div>
+
+        <div class="flex item-center space-x-1">
+          <label>Available:</label>
+          <input type="checkbox" class="accent-primary-600" v-model="form.available" />
         </div>
 
         <div class="text-center mt-5">

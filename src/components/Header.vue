@@ -9,7 +9,7 @@ const links = [
   <header class="navbar-dark">
     <div class="container flex justify-between">
       <router-link :to="{ name: 'books' }">
-        <img src="/static/media/logo.png" class="logo" />
+        <img src="/static/media/logo.png" class="logo" alt="logo" />
       </router-link>
       <ul class="flex space-x-3">
         <template v-for="link of links">

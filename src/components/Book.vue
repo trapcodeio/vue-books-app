@@ -6,7 +6,11 @@ defineProps<{ book: Book }>();
   <section v-if="book" class="bg-primary-950 p-7 text-white">
     <div class="flex space-x-5">
       <div class="cover flex-initial">
-        <img src="/static/media/no-cover-img.png" class="w-[130px] h-[130px]" />
+        <img
+          src="/static/media/no-cover-img.png"
+          class="w-[130px] h-[130px]"
+          alt="no-cover-img"
+        />
       </div>
       <div>
         <h4 class="text-2xl">Book</h4>

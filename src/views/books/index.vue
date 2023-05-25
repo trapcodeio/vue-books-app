@@ -144,7 +144,7 @@ function stopSearching() {
     </template>
     <section v-else>
       <div class="flex justify-center my-14">
-        <img src="/static/media/no-book.png" width="220" />
+        <img src="/static/media/no-book.png" width="220" alt="no-book" />
       </div>
       <div class="text-center">
         <router-link :to="{ name: 'books.add' }" class="action-btn">Add Book</router-link>

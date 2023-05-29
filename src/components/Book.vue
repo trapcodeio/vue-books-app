@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BookService, { Book } from "../services/book.service";
+import { Book } from "../services/book.service";
 defineProps<{ book: Book }>();
 </script>
 <template>
@@ -19,7 +19,7 @@ defineProps<{ book: Book }>();
           <p><span>Description:</span> {{ book.description }}</p>
           <p>
             <span>Availability:</span>
-            {{ BookService.isAvailable(book) ? "Available" : "Lent" }}
+            {{ book.available ? "Available" : "Lent" }}
           </p>
         </div>
       </div>

@@ -26,9 +26,8 @@ async function addBook() {
     await BookService.create(form);
     notification.notify(`Book: ${form.title} added successfully`);
     await $router.push({ name: "books" });
-  } catch (e) {
-    console.error(e);
-    notification.notify(`Failed to add book ${form.title}`, "error");
+  } catch (e: any) {
+    notification.notify(`Failed to add book "${form.title}": ${e.message}`, "error");
   } finally {
     isBusy.value = false;
   }

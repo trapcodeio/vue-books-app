@@ -32,10 +32,10 @@ async function fetchBook() {
     // populate form
     form.title = data.title;
     form.description = data.description;
-    form.available = BookService.isAvailable(data);
-  } catch (e) {
+    form.available = data.available;
+  } catch (e: any) {
     console.error(e);
-    notification.notify(`Failed to fetch book ${bookId.value}`, "error");
+    notification.notify(`Failed to fetch book "${bookId.value}": ${e.message}`, "error");
   } finally {
     isBusy.value = false;
   }

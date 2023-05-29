@@ -39,7 +39,8 @@ async function fetchBooks() {
     const { data } = await BookService.getAll();
     books.value = data;
     isSearchResult.value = false;
-  } catch (e) {
+  } catch (e: any) {
+    notification.notify(`Unable to fetch books: ${e.message}`, "error");
   } finally {
     isBusy.value = false;
   }
@@ -56,6 +57,7 @@ async function deleteAllBooks() {
     await BookService.deleteAll();
     books.value = [];
   } catch (e) {
+    notification.notify(`Unable to delete all books`, "error");
   } finally {
     isBusy.value = false;
   }
@@ -73,8 +75,7 @@ async function searchBooks() {
     books.value = data;
     isSearchResult.value = true;
   } catch (e) {
-    console.log(e);
-    notification.notify(`Failed to search books`, "error");
+    notification.notify(`Unable to search books`, "error");
   } finally {
     isBusy.value = false;
   }

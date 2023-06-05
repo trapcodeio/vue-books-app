@@ -6,6 +6,8 @@ ENV NODE_ENV development
 ARG VITE_API_URL
 ENV VITE_API_URL $VITE_API_URL
 
+RUN echo "VITE_API_URL: {$VITE_API_URL}"
+
 # setup workdir (next commands will run under this context, but also the running container will inherit this - if not overriden at runtime)
 WORKDIR /usr/src/app/
 
@@ -29,10 +31,13 @@ CMD ["npm", "run", "dev"]
 # prod (and build) stages
 FROM dev AS build
 
+RUN echo "VITE_API_URL: {$VITE_API_URL}"
 RUN npm run build
 
 # prod stage
 FROM nginx:1.21.3-alpine AS prod
+
+RUN echo "VITE_API_URL: {$VITE_API_URL}"
 
 # Copy the built app to the Nginx HTML directory
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html

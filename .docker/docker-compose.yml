@@ -5,10 +5,8 @@ services:
     build:
       context: ./../
       dockerfile: .docker/Dockerfile
-#     target: ${FRONTEND_BUILD_TARGET:-dev} # use "prod" for production
-    environment:
-      VITE_API_URL: ${BACKEND_URL:-http://localhost:9091}
-    volumes:
-      - ./../:/var/www/frontend:delegated
+      target: prod
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:9000}
     ports:
       - "8080:8080"
